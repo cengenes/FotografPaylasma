@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <!-- heightini wrap content yapmayı unutma böylece aşağı kaydırabilcez bu önemli    -->
+
+    <TextView
+        android:id="@+id/recyclerEmailText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Kullanıcı Emaili"
+        android:textSize="22sp"
+        android:layout_marginTop="25dp"
+        android:layout_marginLeft="15dp"
+        android:paddingLeft="10dp"
+        >
+    </TextView>
+
+
+    <ImageView
+        android:id="@+id/recyclerImageView"
+        android:layout_width="350dp"
+        android:layout_height="220dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="25dp"
+
+
+        >
+    </ImageView>
+
+
+
+
+
+    <TextView
+        android:id="@+id/recyclerYorumText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Kullanıcı yorumu"
+        android:textSize="18sp"
+        android:layout_marginTop="25dp"
+        android:layout_marginLeft="15dp"
+        >
+    </TextView>
+
+</LinearLayout>

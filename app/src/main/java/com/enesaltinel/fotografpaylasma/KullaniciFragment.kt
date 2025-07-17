@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.Navigation
 import com.enesaltinel.fotografpaylasma.databinding.FragmentKullaniciBinding
 
 
@@ -36,6 +37,9 @@ class KullaniciFragment : Fragment() {
     }
 
     fun kayitOl(view: View){
+
+        val action = KullaniciFragmentDirections.actionKullaniciFragmentToFeedFragment()
+        Navigation.findNavController(view).navigate(action)
 
     }
 
