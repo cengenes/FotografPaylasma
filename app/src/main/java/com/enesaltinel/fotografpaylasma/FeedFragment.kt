@@ -10,6 +10,9 @@ import androidx.appcompat.widget.PopupMenu
 import androidx.navigation.Navigation
 import com.enesaltinel.fotografpaylasma.databinding.FragmentFeedBinding
 import com.enesaltinel.fotografpaylasma.databinding.FragmentKullaniciBinding
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 
 
 class FeedFragment : Fragment(),PopupMenu.OnMenuItemClickListener {  // Bu sınıf, PopupMenu içindeki öğelere tıklanma olayını dinlemeye hazır.
@@ -18,9 +21,13 @@ class FeedFragment : Fragment(),PopupMenu.OnMenuItemClickListener {  // Bu sın�
     private var _binding: FragmentFeedBinding? = null
     private val binding get() = _binding!!
 
+    private lateinit var auth:FirebaseAuth
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        auth = Firebase.auth
 
     }
 
@@ -66,6 +73,7 @@ class FeedFragment : Fragment(),PopupMenu.OnMenuItemClickListener {  // Bu sın�
             Navigation.findNavController(requireView()).navigate(action)
         }else if (item?.itemId == R.id.cikisItem){
             // çıkış yapma işlemi
+            auth.signOut()
             val action = FeedFragmentDirections.actionFeedFragmentToKullaniciFragment()
             Navigation.findNavController(requireView()).navigate(action)
         }

@@ -44,7 +44,7 @@ class KullaniciFragment : Fragment() {
         binding.kayitButton.setOnClickListener {kayitOl(it)}
         binding.girisButton.setOnClickListener { girisYap(it) }
 
-        val guncelKullanici = auth.currentUser
+        val guncelKullanici = auth.currentUser // bu sayede giriş yapmış isek direkt sayfa açılıyor.
         if (guncelKullanici != null){
             // kullanıcı daha önceden giriş yapmış
             val action = KullaniciFragmentDirections.actionKullaniciFragmentToFeedFragment()
@@ -83,7 +83,7 @@ class KullaniciFragment : Fragment() {
         val password = binding.passwordText.text.toString()
 
         if(email.isNotEmpty() && password.isNotEmpty()){
-            auth.signInWithEmailAndPassword(email,password).addOnSuccessListener {
+            auth.signInWithEmailAndPassword(email,password).addOnSuccessListener { // 	Firebase Authentication kullanılarak kullanıcı girişi yapılır.
                 val action = KullaniciFragmentDirections.actionKullaniciFragmentToFeedFragment()
                 Navigation.findNavController(view).navigate(action)
 
