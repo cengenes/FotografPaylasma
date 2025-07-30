@@ -5,8 +5,13 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.navigation.Navigation
 import com.enesaltinel.fotografpaylasma.databinding.FragmentKullaniciBinding
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.auth
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 
 
 class KullaniciFragment : Fragment() {
@@ -14,9 +19,13 @@ class KullaniciFragment : Fragment() {
     private var _binding: FragmentKullaniciBinding? = null
     private val binding get() = _binding!!
 
+    private lateinit var auth : FirebaseAuth // Firebase Authentication (kimlik doğrulama) işlemleri için gerekli olan FirebaseAuth nesnesini oluşturduk.
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        auth = Firebase.auth // initalize ettik.
 
     }
 
@@ -38,8 +47,28 @@ class KullaniciFragment : Fragment() {
 
     fun kayitOl(view: View){
 
-        val action = KullaniciFragmentDirections.actionKullaniciFragmentToFeedFragment()
-        Navigation.findNavController(view).navigate(action)
+        val email = binding.emailText.text.toString()
+        val password = binding.passwordText.text.toString()
+
+        if(email.isNotEmpty() && password.isNotEmpty()){ // Hem e-posta hem de şifre  eğer ikisi de doluysa devam ediyor.
+            // Firebase Authentication servisi kullanılarak, girilen bilgilerle yeni bir kullanıcı kaydı oluşturuluyor.
+            auth.createUserWithEmailAndPassword(email,password).addOnCompleteListener { task ->
+                if (task.isSuccessful){ // kullanıcı başarıyla oluşturulursa
+                    // kullanıcı oluşturuldu
+                    val action = KullaniciFragmentDirections.actionKullaniciFragmentToFeedFragment()
+                    Navigation.findNavController(view).navigate(action)
+                }
+            // Eğer kullanıcı oluşturulurken bir hata olursa (örneğin e-posta zaten kullanılmışsa), hata mesajı bir Toast ile ekrana gösteriliyor.
+            }.addOnFailureListener { exception->
+                Toast.makeText(requireContext(),exception.localizedMessage,Toast.LENGTH_LONG).show()
+            }
+        }
+
+
+
+
+
+
 
     }
 
