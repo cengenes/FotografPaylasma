@@ -43,6 +43,17 @@ class KullaniciFragment : Fragment() {
 
         binding.kayitButton.setOnClickListener {kayitOl(it)}
         binding.girisButton.setOnClickListener { girisYap(it) }
+
+        val guncelKullanici = auth.currentUser
+        if (guncelKullanici != null){
+            // kullanıcı daha önceden giriş yapmış
+            val action = KullaniciFragmentDirections.actionKullaniciFragmentToFeedFragment()
+            Navigation.findNavController(view).navigate(action)
+        }
+
+
+
+
     }
 
     fun kayitOl(view: View){
@@ -64,15 +75,25 @@ class KullaniciFragment : Fragment() {
             }
         }
 
-
-
-
-
-
-
     }
 
     fun girisYap(view: View){
+
+        val email = binding.emailText.text.toString()
+        val password = binding.passwordText.text.toString()
+
+        if(email.isNotEmpty() && password.isNotEmpty()){
+            auth.signInWithEmailAndPassword(email,password).addOnSuccessListener {
+                val action = KullaniciFragmentDirections.actionKullaniciFragmentToFeedFragment()
+                Navigation.findNavController(view).navigate(action)
+
+            }.addOnFailureListener { exception->
+                Toast.makeText(requireContext(),exception.localizedMessage,Toast.LENGTH_LONG).show()
+
+            }
+        }
+
+
 
     }
 
